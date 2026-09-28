@@ -48,8 +48,8 @@ public class DBHelper {
         }
     }
 
-    public void createOrdersTable2() {
-        try (PreparedStatement statement = connection.prepareStatement(Queries.CREATE_ORDERS_TABLE_2)) {
+    public void createOrdersTableForMQTest() {
+        try (PreparedStatement statement = connection.prepareStatement(Queries.CREATE_ORDERS_TABLE_FOR_MQ_TEST)) {
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -29,13 +29,6 @@ public interface Queries {
                 CONSTRAINT orders_amount_check CHECK (amount > 0::numeric)
             )""";
 
-    String CREATE_ORDERS_TABLE_2 = """
-            CREATE TABLE IF NOT EXISTS public.orders (
-                order_id integer NOT NULL,
-                status character varying(10) NOT NULL,
-                CONSTRAINT orders_pkey PRIMARY KEY (order_id)
-            )""";
-
     String DROP_ORDERS_TABLE = """
             DROP TABLE IF EXISTS public.orders""";
 
@@ -212,4 +205,11 @@ public interface Queries {
         FROM public.users
         WHERE id = ?
         """;
+
+    String CREATE_ORDERS_TABLE_FOR_MQ_TEST = """
+        CREATE TABLE IF NOT EXISTS public.orders (
+            order_id integer NOT NULL,
+            status character varying(10) NOT NULL,
+            CONSTRAINT orders_pkey PRIMARY KEY (order_id)
+        )""";
 }

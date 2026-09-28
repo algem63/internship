@@ -1,4 +1,4 @@
-package internship.tests.week3;
+package internship.tests.week3.task1;
 
 import internship.utils.DBHelper;
 import org.junit.jupiter.api.AfterAll;

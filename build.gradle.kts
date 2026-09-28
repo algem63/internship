@@ -46,6 +46,8 @@ dependencies {
     testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
     testImplementation("io.qameta.allure:allure-jupiter")
     agent("org.aspectj:aspectjweaver:${aspectJVersion}")
+
+    implementation("org.apache.kafka:kafka-clients:4.3.1")
 }
 
 tasks.test {
