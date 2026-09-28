@@ -213,4 +213,30 @@ public class DBHelper {
             throw new RuntimeException(e);
         }
     }
+
+    public String insertNewUser() {
+        try {
+            int id = -1;
+            try (PreparedStatement statement = connection.prepareStatement(Queries.INSERT_NEW_USER)) {
+                //'John Doe', 'john_doe@gmail.com', 'active'
+                statement.setString(1, "John Doe");
+                statement.setString(2, "john_doe@gmail.com");
+                statement.setString(3, "active");
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            }
+            try (PreparedStatement statement = connection.prepareStatement(Queries.FIND_CREATED_USER)) {
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getString("email");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

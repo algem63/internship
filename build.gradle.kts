@@ -9,6 +9,14 @@ repositories {
     mavenCentral()
 }
 
+val allureVersion = "2.35.3"
+val aspectJVersion = "1.9.25"
+
+val agent: Configuration by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = true
+}
+
 dependencies {
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -34,8 +42,15 @@ dependencies {
     implementation("com.codeborne:selenide:7.18.1")
 
     implementation("org.aeonbits.owner:owner:1.0.12")
+
+    testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
+    testImplementation("io.qameta.allure:allure-jupiter")
+    agent("org.aspectj:aspectjweaver:${aspectJVersion}")
 }
 
 tasks.test {
+    jvmArgs = listOf(
+        "-javaagent:${agent.singleFile}"
+    )
     useJUnitPlatform()
 }

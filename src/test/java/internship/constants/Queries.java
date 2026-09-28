@@ -200,4 +200,16 @@ public interface Queries {
         JOIN orders ON orders.user_id = users.id
         WHERE users.email = 'pat.moore@email.com'
         GROUP BY orders.status""";
+
+    String INSERT_NEW_USER = """
+        INSERT INTO users(name, email, status)
+        VALUES (?, ?, ?)
+        RETURNING id
+        """;
+
+    String FIND_CREATED_USER = """
+        SELECT email
+        FROM public.users
+        WHERE id = ?
+        """;
 }
