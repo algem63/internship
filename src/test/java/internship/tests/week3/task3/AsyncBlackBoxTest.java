@@ -3,11 +3,9 @@ package internship.tests.week3.task3;
 import internship.config.Config;
 import internship.utils.DBHelper;
 import internship.utils.RestHelper;
+import internship.utils.TraceIdManager;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +40,10 @@ public class AsyncBlackBoxTest {
     @DisplayName("Корректный запрос")
     public void positiveCheck() {
         String requestId = UUID.randomUUID().toString();
+
+        String traceId = TraceIdManager.get();  // ← Для логов
+        log.info("Starting test with traceId={}", traceId);
+
         Response response = RestHelper.postWithCorrelationIdHeader(
                 Config.INSTANCE.triggerUrl(),
                 requestId);

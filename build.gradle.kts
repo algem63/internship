@@ -20,7 +20,7 @@ val agent: Configuration by configurations.creating {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.platform:junit-platform-launcher")
 
     testImplementation("io.rest-assured:rest-assured:6.0.1")
     implementation("io.rest-assured:json-schema-validator:6.0.1")

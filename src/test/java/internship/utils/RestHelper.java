@@ -61,15 +61,24 @@ public final class RestHelper {
     }
 
     public static Response postWithCorrelationIdHeader(String fullUrl, String id) {
-        return given()
+        Response response = given()
                 .contentType(ContentType.JSON)
                 .log().all()
                 .header("X-Request-Id", id)
+                .header("X-Trace-Id", TraceIdManager.get())
                 .when()
                 .post(fullUrl)
                 .then()
                 .extract()
                 .response();
+
+        RequestLogger.log("POST " + fullUrl);
+        RequestLogger.log("X-Request-Id: " + id);
+        RequestLogger.log("X-Trace-Id: " + TraceIdManager.get());
+        RequestLogger.log("Response Status: " + response.statusCode());
+        RequestLogger.log("Response Body: " + response.asString());
+
+        return response;
     }
 
 

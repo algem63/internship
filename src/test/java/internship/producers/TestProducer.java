@@ -1,8 +1,8 @@
 package internship.producers;
 
-import internship.consumers.TestConsumer;
 import internship.messages.Message;
 import internship.serializers.MessageSerializer;
+import internship.utils.TraceIdManager;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -30,6 +30,8 @@ public class TestProducer {
     public void sendMessage(Message message, String corrId) {
         ProducerRecord<String, Message> record = new ProducerRecord<>("order-events", "key", message);
         record.headers().add("X-Correlation-Id", corrId.getBytes(StandardCharsets.UTF_8));
+        record.headers().add("X-Trace-Id",
+                TraceIdManager.get().getBytes(StandardCharsets.UTF_8));
         producer.send(record, (metadata, exception) -> {
             if (exception != null) {
                 log.error("Failed to send message: orderId={}, corrId={}",

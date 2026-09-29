@@ -8,6 +8,7 @@ import internship.pages.saucedemo.selenide.CartPage;
 import internship.pages.saucedemo.selenide.CheckoutCompletePage;
 import internship.pages.saucedemo.selenide.CheckoutStepOnePage;
 import internship.pages.saucedemo.selenide.CheckoutStepTwoPage;
+import io.qameta.allure.Step;
 
 public class SauceDemoSelenideSteps {
 
@@ -18,11 +19,13 @@ public class SauceDemoSelenideSteps {
     private final CheckoutStepTwoPage stepTwoPage = new CheckoutStepTwoPage();
     private final CheckoutCompletePage completePage = new CheckoutCompletePage();
 
+    @Step("Открыть главную страницу SauceDemo")
     public SauceDemoSelenideSteps open() {
         Selenide.open(Config.INSTANCE.saucedemoBaseUrl());
         return this;
     }
 
+    @Step("Авторизация как standard_user")
     public SauceDemoSelenideSteps loginAsStandardUser() {
         loginPage
                 .typeUserName(Config.INSTANCE.saucedemoUsername())
@@ -31,6 +34,7 @@ public class SauceDemoSelenideSteps {
         return this;
     }
 
+    @Step("Добавить два товара в корзину")
     public SauceDemoSelenideSteps addItemsToCart() {
         inventoryPage
                 .checkPageHeader()
@@ -40,6 +44,7 @@ public class SauceDemoSelenideSteps {
         return this;
     }
 
+    @Step("Заполнить данные пользователя: {firstName} {lastName}, индекс: {postalCode}")
     public SauceDemoSelenideSteps fillInUserData(String firstName, String lastName, String postalCode) {
         cartPage
                 .clickCheckoutBtn();
@@ -53,10 +58,12 @@ public class SauceDemoSelenideSteps {
         return this;
     }
 
+    @Step("Получить заголовок страницы завершения заказа")
     public String getCompletePurchasePageTitleText() {
         return completePage.getTitleLabelText();
     }
 
+    @Step("Получить заголовок инвентаря")
     public String getInventoryPageHeaderText() {
         return inventoryPage.getHeaderText();
     }
