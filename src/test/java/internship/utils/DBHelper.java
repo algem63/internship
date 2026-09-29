@@ -24,6 +24,14 @@ public class DBHelper {
         }
     }
 
+    public DBHelper(String uri, String login, String password) {
+        try {
+            this.connection = DriverManager.getConnection(uri, login, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void close() {
         try {
             this.connection.close();
@@ -238,5 +246,35 @@ public class DBHelper {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public void createEventsTable() {
+        try (PreparedStatement statement = connection.prepareStatement(Queries.CREATE_EVENTS_TABLE)) {
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void dropEventsTable() {
+        try (PreparedStatement statement = connection.prepareStatement(Queries.DROP_EVENTS_TABLE)) {
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String checkEventsTable(String requestID) {
+        try (PreparedStatement statement = connection.prepareStatement(Queries.FIND_EVENT_WITH_ID)) {
+            String status = null;
+            statement.setString(1, requestID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                status = resultSet.getString("status");
+            }
+            return status;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

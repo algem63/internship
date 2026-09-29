@@ -212,4 +212,20 @@ public interface Queries {
             status character varying(10) NOT NULL,
             CONSTRAINT orders_pkey PRIMARY KEY (order_id)
         )""";
+
+    String CREATE_EVENTS_TABLE = """
+        CREATE TABLE IF NOT EXISTS public.events (
+            request_id VARCHAR PRIMARY KEY,
+            status VARCHAR)
+        """;
+
+    String DROP_EVENTS_TABLE = """
+            DROP TABLE IF EXISTS public.events
+            """;
+
+    String FIND_EVENT_WITH_ID = """
+        SELECT status
+        FROM public.events
+        WHERE request_id = ?
+        """;
 }

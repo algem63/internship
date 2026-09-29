@@ -23,5 +23,17 @@ public interface Config extends org.aeonbits.owner.Config {
     @Key("herokuapp.tables_url")
     String herokuappTablesUrl();
 
+    @Key("local.database.url")
+    String localDatabaseUrl();
+
+    @Key("local.database.username")
+    String localDatabaseUsername();
+
+    @Key("local.database.password")
+    String localDatabasePassword();
+
+    @Key("trigger.url")
+    String triggerUrl();
+
     Config INSTANCE = org.aeonbits.owner.ConfigFactory.create(Config.class);
 }

@@ -60,6 +60,20 @@ public final class RestHelper {
                 .response();
     }
 
+    public static Response postWithCorrelationIdHeader(String fullUrl, String id) {
+        return given()
+                .contentType(ContentType.JSON)
+                .log().all()
+                .header("X-Request-Id", id)
+                .when()
+                .post(fullUrl)
+                .then()
+                .extract()
+                .response();
+    }
+
+
+
     public static boolean validateSchema(Response response, String schemaPath) {
         try {
             response.then().assertThat()
