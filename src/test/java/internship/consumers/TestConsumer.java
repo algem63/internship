@@ -37,6 +37,23 @@ public class TestConsumer {
         this.dbHelper = dbHelper;
     }
 
+    public TestConsumer(String bootstrapServers, DBHelper dbHelper) {
+        Properties props = new Properties();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "my-consumer-group");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "internship.serializers.MessageDeserializer");
+
+        this.consumer = new KafkaConsumer<>(props);
+        this.consumer.subscribe(Collections.singletonList("order-events"));
+        // После subscribe
+        this.consumer.poll(Duration.ofMillis(1000));  // ← Холодный старт
+        this.dbHelper = dbHelper;
+    }
+
     public List<Message> receiveMessages() {
         List<Message> sentMessages = new ArrayList<>();
         await().atMost(15, SECONDS).until(() -> {

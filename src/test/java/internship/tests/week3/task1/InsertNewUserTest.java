@@ -24,7 +24,11 @@ public class InsertNewUserTest {
 
     @BeforeAll
     public static void setUp() {
-        dbHelper = new DBHelper(postgres.getMappedPort(5432));
+        dbHelper = new DBHelper(
+                postgres.getJdbcUrl(),
+                postgres.getUsername(),
+                postgres.getPassword()
+        );
         dbHelper.createUsersTable();
     }
 
