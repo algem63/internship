@@ -9,8 +9,10 @@ repositories {
     mavenCentral()
 }
 
-val allureVersion = "2.35.3"
-val aspectJVersion = "1.9.25"
+val allureVersion = "2.29.0"
+val cucumberVersion = "7.20.1"
+val aspectJVersion = "1.9.22"
+
 
 val agent: Configuration by configurations.creating {
     isCanBeConsumed = true
@@ -21,6 +23,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.platform:junit-platform-suite")
 
     testImplementation("io.rest-assured:rest-assured:6.0.1")
     implementation("io.rest-assured:json-schema-validator:6.0.1")
@@ -43,13 +46,17 @@ dependencies {
 
     implementation("org.aeonbits.owner:owner:1.0.12")
 
-    testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
-    testImplementation("io.qameta.allure:allure-jupiter")
-    testImplementation("io.qameta.allure:allure-junit5:2.24.0")
-
     agent("org.aspectj:aspectjweaver:${aspectJVersion}")
 
     implementation("org.apache.kafka:kafka-clients:4.3.1")
+
+    testImplementation(platform("io.cucumber:cucumber-bom:$cucumberVersion"))
+    testImplementation("io.cucumber:cucumber-java")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine")
+
+    testImplementation(platform("io.qameta.allure:allure-bom:$allureVersion"))
+    testImplementation("io.qameta.allure:allure-cucumber7-jvm")
+    testImplementation("io.qameta.allure:allure-junit-platform")
 }
 
 tasks.test {

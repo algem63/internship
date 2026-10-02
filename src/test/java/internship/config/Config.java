@@ -17,6 +17,9 @@ public interface Config extends org.aeonbits.owner.Config {
     @Key("herokuapp.login_url")
     String herokuappLoginUrl();
 
+    @Key("herokuapp.auth_url")
+    String herokuappAuthUrl();
+
     @Key("herokuapp.dynamic-loading_url")
     String herokuappDynamicLoadingUrl();
 

@@ -38,11 +38,8 @@ public class MQTest {
 
     @BeforeAll
     public static void setUp() {
-        Integer mappedPostgresPort = postgres.getMappedPort(5432);
-        Integer mappedRedPandaPort = redpanda.getMappedPort(9092);
         try {
             redpanda.execInContainer("rpk topic create order-events");
-            Thread.sleep(5000);
             dbHelper = new DBHelper(
                     postgres.getJdbcUrl(),
                     postgres.getUsername(),
@@ -52,7 +49,6 @@ public class MQTest {
 
             producer = new TestProducer(redpanda.getBootstrapServers());
             consumer = new TestConsumer(redpanda.getBootstrapServers(), dbHelper);
-            Thread.sleep(3000);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
